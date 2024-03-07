@@ -1,12 +1,17 @@
 import { Lucia } from 'lucia';
 import { dev } from '$app/environment';
 
-import { PrismaAdapter } from '@lucia-auth/adapter-prisma';
-import { PrismaClient } from '@prisma/client';
+declare module 'lucia' {
+	interface Register {
+		Lucia: typeof lucia;
+	}
+}
 
-const client = new PrismaClient();
+import { DrizzleMySQLAdapter, DrizzlePostgreSQLAdapter } from '@lucia-auth/adapter-drizzle';
 
-const adapter = new PrismaAdapter(client.session, client.user);
+import { db } from './db/db.server';
+import { luciaSession, luciaUser } from './drizzle/schema';
+const adapter = new DrizzleMySQLAdapter(db, luciaSession, luciaUser);
 
 export const lucia = new Lucia(adapter, {
 	sessionCookie: {
@@ -16,9 +21,3 @@ export const lucia = new Lucia(adapter, {
 		}
 	}
 });
-
-declare module 'lucia' {
-	interface Register {
-		Lucia: typeof lucia;
-	}
-}

@@ -1,0 +1,2183 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "da8d9a52-96c4-49d7-877a-8a987f741b37",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "answer": {
+      "name": "answer",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "uuid": {
+          "name": "uuid",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "assignment_entry_submission_id": {
+          "name": "assignment_entry_submission_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "problem_id": {
+          "name": "problem_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "language": {
+          "name": "language",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "attachment_id": {
+          "name": "attachment_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "points": {
+          "name": "points",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "record_id": {
+          "name": "record_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "submitter_id": {
+          "name": "submitter_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "is_valid": {
+          "name": "is_valid",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "assignmentEntrySubmissionIdIdx": {
+          "name": "assignmentEntrySubmissionIdIdx",
+          "columns": [
+            "assignment_entry_submission_id"
+          ],
+          "isUnique": false
+        },
+        "problemIdIdx": {
+          "name": "problemIdIdx",
+          "columns": [
+            "problem_id"
+          ],
+          "isUnique": false
+        },
+        "submitterIdIdx": {
+          "name": "submitterIdIdx",
+          "columns": [
+            "submitter_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "answer_assignment_entry_submission_id_assignment_entry_submission_id_fk": {
+          "name": "answer_assignment_entry_submission_id_assignment_entry_submission_id_fk",
+          "tableFrom": "answer",
+          "tableTo": "assignment_entry_submission",
+          "columnsFrom": [
+            "assignment_entry_submission_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "answer_problem_id_problem_id_fk": {
+          "name": "answer_problem_id_problem_id_fk",
+          "tableFrom": "answer",
+          "tableTo": "problem",
+          "columnsFrom": [
+            "problem_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        },
+        "answer_attachment_id_file_id_fk": {
+          "name": "answer_attachment_id_file_id_fk",
+          "tableFrom": "answer",
+          "tableTo": "file",
+          "columnsFrom": [
+            "attachment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "answer_record_id_ioj_record_id_fk": {
+          "name": "answer_record_id_ioj_record_id_fk",
+          "tableFrom": "answer",
+          "tableTo": "ioj_record",
+          "columnsFrom": [
+            "record_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "answer_submitter_id_user_id_fk": {
+          "name": "answer_submitter_id_user_id_fk",
+          "tableFrom": "answer",
+          "tableTo": "user",
+          "columnsFrom": [
+            "submitter_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "answer_id": {
+          "name": "answer_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "answer_attachment_id_unique": {
+          "name": "answer_attachment_id_unique",
+          "columns": [
+            "attachment_id"
+          ]
+        },
+        "answer_record_id_unique": {
+          "name": "answer_record_id_unique",
+          "columns": [
+            "record_id"
+          ]
+        }
+      }
+    },
+    "answer_feedback": {
+      "name": "answer_feedback",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "answer_id": {
+          "name": "answer_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "assignment_entry_submission_feedback_id": {
+          "name": "assignment_entry_submission_feedback_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "attachment_id": {
+          "name": "attachment_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "points": {
+          "name": "points",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "assignmentEntrySubmissionFeedbackIdIdx": {
+          "name": "assignmentEntrySubmissionFeedbackIdIdx",
+          "columns": [
+            "assignment_entry_submission_feedback_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "answer_feedback_answer_id_answer_id_fk": {
+          "name": "answer_feedback_answer_id_answer_id_fk",
+          "tableFrom": "answer_feedback",
+          "tableTo": "answer",
+          "columnsFrom": [
+            "answer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        },
+        "answer_feedback_assignment_entry_submission_feedback_id_assignment_entry_submission_feedback_id_fk": {
+          "name": "answer_feedback_assignment_entry_submission_feedback_id_assignment_entry_submission_feedback_id_fk",
+          "tableFrom": "answer_feedback",
+          "tableTo": "assignment_entry_submission_feedback",
+          "columnsFrom": [
+            "assignment_entry_submission_feedback_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        },
+        "answer_feedback_attachment_id_file_id_fk": {
+          "name": "answer_feedback_attachment_id_file_id_fk",
+          "tableFrom": "answer_feedback",
+          "tableTo": "file",
+          "columnsFrom": [
+            "attachment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "answer_feedback_id": {
+          "name": "answer_feedback_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "answer_feedback_answer_id_unique": {
+          "name": "answer_feedback_answer_id_unique",
+          "columns": [
+            "answer_id"
+          ]
+        },
+        "answer_feedback_attachment_id_unique": {
+          "name": "answer_feedback_attachment_id_unique",
+          "columns": [
+            "attachment_id"
+          ]
+        }
+      }
+    },
+    "answer_files": {
+      "name": "answer_files",
+      "columns": {
+        "answer_id": {
+          "name": "answer_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "file_id": {
+          "name": "file_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "answerIdIdx": {
+          "name": "answerIdIdx",
+          "columns": [
+            "answer_id"
+          ],
+          "isUnique": false
+        },
+        "fileIdIdx": {
+          "name": "fileIdIdx",
+          "columns": [
+            "file_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "answer_files_answer_id_answer_id_fk": {
+          "name": "answer_files_answer_id_answer_id_fk",
+          "tableFrom": "answer_files",
+          "tableTo": "answer",
+          "columnsFrom": [
+            "answer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "answer_files_file_id_file_id_fk": {
+          "name": "answer_files_file_id_file_id_fk",
+          "tableFrom": "answer_files",
+          "tableTo": "file",
+          "columnsFrom": [
+            "file_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "answer_files_answer_id_file_id": {
+          "name": "answer_files_answer_id_file_id",
+          "columns": [
+            "answer_id",
+            "file_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "assignment": {
+      "name": "assignment",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "points": {
+          "name": "points",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "class_id": {
+          "name": "class_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "start": {
+          "name": "start",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "end": {
+          "name": "end",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "public": {
+          "name": "public",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 1
+        }
+      },
+      "indexes": {
+        "classIdIdx": {
+          "name": "classIdIdx",
+          "columns": [
+            "class_id"
+          ],
+          "isUnique": false
+        },
+        "nameIdx": {
+          "name": "nameIdx",
+          "columns": [
+            "name"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "assignment_class_id_class_id_fk": {
+          "name": "assignment_class_id_class_id_fk",
+          "tableFrom": "assignment",
+          "tableTo": "class",
+          "columnsFrom": [
+            "class_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "assignment_id": {
+          "name": "assignment_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "assignment_assignee": {
+      "name": "assignment_assignee",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "assignment_id": {
+          "name": "assignment_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "start": {
+          "name": "start",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "end": {
+          "name": "end",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "to_evenyone": {
+          "name": "to_evenyone",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "assignmentIdIdx": {
+          "name": "assignmentIdIdx",
+          "columns": [
+            "assignment_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "assignment_assignee_assignment_id_assignment_id_fk": {
+          "name": "assignment_assignee_assignment_id_assignment_id_fk",
+          "tableFrom": "assignment_assignee",
+          "tableTo": "assignment",
+          "columnsFrom": [
+            "assignment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "assignment_assignee_id": {
+          "name": "assignment_assignee_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "assignment_entry": {
+      "name": "assignment_entry",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "assignment_id": {
+          "name": "assignment_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "uuid": {
+          "name": "uuid",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "proportion": {
+          "name": "proportion",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "penalty": {
+          "name": "penalty",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "penalty_after": {
+          "name": "penalty_after",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "assignmentIdIdx": {
+          "name": "assignmentIdIdx",
+          "columns": [
+            "assignment_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "assignment_entry_assignment_id_assignment_id_fk": {
+          "name": "assignment_entry_assignment_id_assignment_id_fk",
+          "tableFrom": "assignment_entry",
+          "tableTo": "assignment",
+          "columnsFrom": [
+            "assignment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "assignment_entry_id": {
+          "name": "assignment_entry_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "assignment_entry_metric": {
+      "name": "assignment_entry_metric",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "uuid": {
+          "name": "uuid",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "entry_id": {
+          "name": "entry_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "max": {
+          "name": "max",
+          "type": "float",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "entryIdIdx": {
+          "name": "entryIdIdx",
+          "columns": [
+            "entry_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "assignment_entry_metric_entry_id_assignment_entry_id_fk": {
+          "name": "assignment_entry_metric_entry_id_assignment_entry_id_fk",
+          "tableFrom": "assignment_entry_metric",
+          "tableTo": "assignment_entry",
+          "columnsFrom": [
+            "entry_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "assignment_entry_metric_id": {
+          "name": "assignment_entry_metric_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "assignment_entry_note": {
+      "name": "assignment_entry_note",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "entry_id": {
+          "name": "entry_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "uuid": {
+          "name": "uuid",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "submitter_id": {
+          "name": "submitter_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "submitted_at": {
+          "name": "submitted_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "text": {
+          "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "entryIdIdx": {
+          "name": "entryIdIdx",
+          "columns": [
+            "entry_id"
+          ],
+          "isUnique": false
+        },
+        "submitterIdIdx": {
+          "name": "submitterIdIdx",
+          "columns": [
+            "submitter_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "assignment_entry_note_entry_id_assignment_entry_id_fk": {
+          "name": "assignment_entry_note_entry_id_assignment_entry_id_fk",
+          "tableFrom": "assignment_entry_note",
+          "tableTo": "assignment_entry",
+          "columnsFrom": [
+            "entry_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "assignment_entry_note_submitter_id_user_id_fk": {
+          "name": "assignment_entry_note_submitter_id_user_id_fk",
+          "tableFrom": "assignment_entry_note",
+          "tableTo": "user",
+          "columnsFrom": [
+            "submitter_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "assignment_entry_note_id": {
+          "name": "assignment_entry_note_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "assignment_entry_submission": {
+      "name": "assignment_entry_submission",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "uuid": {
+          "name": "uuid",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "submitter_id": {
+          "name": "submitter_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "entry_id": {
+          "name": "entry_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "attachment_id": {
+          "name": "attachment_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "points": {
+          "name": "points",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "feedback_id": {
+          "name": "feedback_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "penalty_score": {
+          "name": "penalty_score",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "final_score": {
+          "name": "final_score",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "scorer_id": {
+          "name": "scorer_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "scored_at": {
+          "name": "scored_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "metrics": {
+          "name": "metrics",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "comment": {
+          "name": "comment",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "submitterIdIdx": {
+          "name": "submitterIdIdx",
+          "columns": [
+            "submitter_id"
+          ],
+          "isUnique": false
+        },
+        "entryIdIdx": {
+          "name": "entryIdIdx",
+          "columns": [
+            "entry_id"
+          ],
+          "isUnique": false
+        },
+        "scorerIdIdx": {
+          "name": "scorerIdIdx",
+          "columns": [
+            "scorer_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "assignment_entry_submission_submitter_id_user_id_fk": {
+          "name": "assignment_entry_submission_submitter_id_user_id_fk",
+          "tableFrom": "assignment_entry_submission",
+          "tableTo": "user",
+          "columnsFrom": [
+            "submitter_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        },
+        "assignment_entry_submission_entry_id_assignment_entry_id_fk": {
+          "name": "assignment_entry_submission_entry_id_assignment_entry_id_fk",
+          "tableFrom": "assignment_entry_submission",
+          "tableTo": "assignment_entry",
+          "columnsFrom": [
+            "entry_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        },
+        "assignment_entry_submission_attachment_id_file_id_fk": {
+          "name": "assignment_entry_submission_attachment_id_file_id_fk",
+          "tableFrom": "assignment_entry_submission",
+          "tableTo": "file",
+          "columnsFrom": [
+            "attachment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "assignment_entry_submission_feedback_id_assignment_entry_submission_feedback_id_fk": {
+          "name": "assignment_entry_submission_feedback_id_assignment_entry_submission_feedback_id_fk",
+          "tableFrom": "assignment_entry_submission",
+          "tableTo": "assignment_entry_submission_feedback",
+          "columnsFrom": [
+            "feedback_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "assignment_entry_submission_scorer_id_user_id_fk": {
+          "name": "assignment_entry_submission_scorer_id_user_id_fk",
+          "tableFrom": "assignment_entry_submission",
+          "tableTo": "user",
+          "columnsFrom": [
+            "scorer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "assignment_entry_submission_id": {
+          "name": "assignment_entry_submission_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "assignment_entry_submission_feedback_id_unique": {
+          "name": "assignment_entry_submission_feedback_id_unique",
+          "columns": [
+            "feedback_id"
+          ]
+        },
+        "assignment_entry_submission_attachment_id_unique": {
+          "name": "assignment_entry_submission_attachment_id_unique",
+          "columns": [
+            "attachment_id"
+          ]
+        }
+      }
+    },
+    "assignment_entry_submission_feedback": {
+      "name": "assignment_entry_submission_feedback",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "submitter_id": {
+          "name": "submitter_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "submitterIdIdx": {
+          "name": "submitterIdIdx",
+          "columns": [
+            "submitter_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "assignment_entry_submission_feedback_submitter_id_user_id_fk": {
+          "name": "assignment_entry_submission_feedback_submitter_id_user_id_fk",
+          "tableFrom": "assignment_entry_submission_feedback",
+          "tableTo": "user",
+          "columnsFrom": [
+            "submitter_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "assignment_entry_submission_feedback_id": {
+          "name": "assignment_entry_submission_feedback_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "class_user_relation": {
+      "name": "class_user_relation",
+      "columns": {
+        "class_id": {
+          "name": "class_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "role": {
+          "name": "role",
+          "type": "enum('teacher','assistant','student')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'student'"
+        }
+      },
+      "indexes": {
+        "classIdIdx": {
+          "name": "classIdIdx",
+          "columns": [
+            "class_id"
+          ],
+          "isUnique": false
+        },
+        "userIdIdx": {
+          "name": "userIdIdx",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "class_user_relation_class_id_class_id_fk": {
+          "name": "class_user_relation_class_id_class_id_fk",
+          "tableFrom": "class_user_relation",
+          "tableTo": "class",
+          "columnsFrom": [
+            "class_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        },
+        "class_user_relation_user_id_user_id_fk": {
+          "name": "class_user_relation_user_id_user_id_fk",
+          "tableFrom": "class_user_relation",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "class_user_relation_class_id_user_id": {
+          "name": "class_user_relation_class_id_user_id",
+          "columns": [
+            "class_id",
+            "user_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "class": {
+      "name": "class",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "course_id": {
+          "name": "course_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "semester_id": {
+          "name": "semester_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "student_list": {
+          "name": "student_list",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "courseIdIdx": {
+          "name": "courseIdIdx",
+          "columns": [
+            "course_id"
+          ],
+          "isUnique": false
+        },
+        "semesterIdIdx": {
+          "name": "semesterIdIdx",
+          "columns": [
+            "semester_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "class_course_id_course_id_fk": {
+          "name": "class_course_id_course_id_fk",
+          "tableFrom": "class",
+          "tableTo": "course",
+          "columnsFrom": [
+            "course_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        },
+        "class_semester_id_semester_id_fk": {
+          "name": "class_semester_id_semester_id_fk",
+          "tableFrom": "class",
+          "tableTo": "semester",
+          "columnsFrom": [
+            "semester_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "class_id": {
+          "name": "class_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "course": {
+      "name": "course",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "number": {
+          "name": "number",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "course_id": {
+          "name": "course_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "file": {
+      "name": "file",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "uuid": {
+          "name": "uuid",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "size": {
+          "name": "size",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "upload_time": {
+          "name": "upload_time",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "type": {
+          "name": "type",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "s3_uuid": {
+          "name": "s3_uuid",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "uuidIdx": {
+          "name": "uuidIdx",
+          "columns": [
+            "uuid"
+          ],
+          "isUnique": false
+        },
+        "parentIdIdx": {
+          "name": "parentIdIdx",
+          "columns": [
+            "parent_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "file_parent_id_foreign": {
+          "name": "file_parent_id_foreign",
+          "tableFrom": "file",
+          "tableTo": "file",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "file_id": {
+          "name": "file_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "found_item": {
+      "name": "found_item",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "type": {
+          "name": "type",
+          "type": "enum('id_card','campus_card','glasses')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "found_at": {
+          "name": "found_at",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "contact": {
+          "name": "contact",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "images": {
+          "name": "images",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "enum('under_review','published','retrieved','expired')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'under_review'"
+        },
+        "submitter_id": {
+          "name": "submitter_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "publisher_id": {
+          "name": "publisher_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "published_at": {
+          "name": "published_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "offical_storage_id": {
+          "name": "offical_storage_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "kept_at": {
+          "name": "kept_at",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "submitterIdIdx": {
+          "name": "submitterIdIdx",
+          "columns": [
+            "submitter_id"
+          ],
+          "isUnique": false
+        },
+        "publisherIdIdx": {
+          "name": "publisherIdIdx",
+          "columns": [
+            "publisher_id"
+          ],
+          "isUnique": false
+        },
+        "officalStorageIdIdx": {
+          "name": "officalStorageIdIdx",
+          "columns": [
+            "offical_storage_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "found_item_submitter_id_user_id_fk": {
+          "name": "found_item_submitter_id_user_id_fk",
+          "tableFrom": "found_item",
+          "tableTo": "user",
+          "columnsFrom": [
+            "submitter_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        },
+        "found_item_publisher_id_user_id_fk": {
+          "name": "found_item_publisher_id_user_id_fk",
+          "tableFrom": "found_item",
+          "tableTo": "user",
+          "columnsFrom": [
+            "publisher_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "found_item_offical_storage_id_lost_found_storage_id_fk": {
+          "name": "found_item_offical_storage_id_lost_found_storage_id_fk",
+          "tableFrom": "found_item",
+          "tableTo": "lost_found_storage",
+          "columnsFrom": [
+            "offical_storage_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "found_item_id": {
+          "name": "found_item_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "ioj_record": {
+      "name": "ioj_record",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "inputs": {
+          "name": "inputs",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "outputs": {
+          "name": "outputs",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "program": {
+          "name": "program",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "ioj_record_id": {
+          "name": "ioj_record_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "lost_found_storage": {
+      "name": "lost_found_storage",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "location": {
+          "name": "location",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "lost_found_storage_id": {
+          "name": "lost_found_storage_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "mikro_orm_migrations": {
+      "name": "mikro_orm_migrations",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "executed_at": {
+          "name": "executed_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "mikro_orm_migrations_id": {
+          "name": "mikro_orm_migrations_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "oauth2credential": {
+      "name": "oauth2credential",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "issuer": {
+          "name": "issuer",
+          "type": "tinyint",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sub": {
+          "name": "sub",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "access_token": {
+          "name": "access_token",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "userIdIdx": {
+          "name": "userIdIdx",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "oauth2credential_user_id_user_id_fk": {
+          "name": "oauth2credential_user_id_user_id_fk",
+          "tableFrom": "oauth2credential",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "oauth2credential_id": {
+          "name": "oauth2credential_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "_prisma_migrations": {
+      "name": "_prisma_migrations",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "checksum": {
+          "name": "checksum",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "finished_at": {
+          "name": "finished_at",
+          "type": "datetime(3)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "migration_name": {
+          "name": "migration_name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "logs": {
+          "name": "logs",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "rolled_back_at": {
+          "name": "rolled_back_at",
+          "type": "datetime(3)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "datetime(3)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP(3)"
+        },
+        "applied_steps_count": {
+          "name": "applied_steps_count",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "_prisma_migrations_id": {
+          "name": "_prisma_migrations_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "problem": {
+      "name": "problem",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "assignment_entry_id": {
+          "name": "assignment_entry_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "type": {
+          "name": "type",
+          "type": "enum('code','file')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "judgement_args": {
+          "name": "judgement_args",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "points": {
+          "name": "points",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "uuid": {
+          "name": "uuid",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "submitter_id": {
+          "name": "submitter_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "answers_of": {
+          "name": "answers_of",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "assignmentEntryIdIdx": {
+          "name": "assignmentEntryIdIdx",
+          "columns": [
+            "assignment_entry_id"
+          ],
+          "isUnique": false
+        },
+        "submitterIdIdx": {
+          "name": "submitterIdIdx",
+          "columns": [
+            "submitter_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "problem_assignment_entry_id_assignment_entry_id_fk": {
+          "name": "problem_assignment_entry_id_assignment_entry_id_fk",
+          "tableFrom": "problem",
+          "tableTo": "assignment_entry",
+          "columnsFrom": [
+            "assignment_entry_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        },
+        "problem_submitter_id_user_id_fk": {
+          "name": "problem_submitter_id_user_id_fk",
+          "tableFrom": "problem",
+          "tableTo": "user",
+          "columnsFrom": [
+            "submitter_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "problem_id": {
+          "name": "problem_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "semester": {
+      "name": "semester",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "year": {
+          "name": "year",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "season": {
+          "name": "season",
+          "type": "enum('Spring','Summer','Fall','Winter')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "semester_id": {
+          "name": "semester_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "user": {
+      "name": "user",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "bio": {
+          "name": "bio",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "''"
+        },
+        "image": {
+          "name": "image",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "''"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sid": {
+          "name": "sid",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "lost_found_storage_id": {
+          "name": "lost_found_storage_id",
+          "type": "int unsigned",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "lostFoundStorageIdIdx": {
+          "name": "lostFoundStorageIdIdx",
+          "columns": [
+            "lost_found_storage_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "user_lost_found_storage_id_lost_found_storage_id_fk": {
+          "name": "user_lost_found_storage_id_lost_found_storage_id_fk",
+          "tableFrom": "user",
+          "tableTo": "lost_found_storage",
+          "columnsFrom": [
+            "lost_found_storage_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "user_id": {
+          "name": "user_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}

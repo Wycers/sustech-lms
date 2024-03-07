@@ -13,7 +13,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 		// codeVerifier
 	});
 
-	event.cookies.set('github_oauth_state', state, {
+	event.cookies.set('_oauth_state', state, {
 		path: '/',
 		secure: import.meta.env.PROD,
 		httpOnly: true,

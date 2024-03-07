@@ -2,11 +2,16 @@ import { OAuth2RequestError } from 'oslo/oauth2';
 
 import type { RequestEvent } from '@sveltejs/kit';
 import oauth2Client from '$lib/auth/sustech-cloud';
+import { lucia } from '$lib/auth.server';
+import { db } from '$lib/db/db.server';
+import { eq } from 'drizzle-orm';
+import { luciaUser, oauth2Credential } from '$lib/drizzle/schema';
+import { generateId } from 'lucia';
 
 export async function GET(event: RequestEvent): Promise<Response> {
 	const code = event.url.searchParams.get('code');
 	const state = event.url.searchParams.get('state');
-	const storedState = event.cookies.get('github_oauth_state') ?? null;
+	const storedState = event.cookies.get('_oauth_state') ?? null;
 	console.log(code, state, storedState);
 	if (!code || !state || !storedState || state !== storedState) {
 		return new Response(null, {
@@ -21,45 +26,46 @@ export async function GET(event: RequestEvent): Promise<Response> {
 		});
 		console.log(tokens);
 
-		const githubUserResponse = await fetch('https://im.sustech.cloud/oidc/me', {
+		const userResponse = await fetch('https://im.sustech.cloud/oidc/me', {
 			headers: {
 				Authorization: `Bearer ${tokens.access_token}`
 			}
 		});
-		console.log(await githubUserResponse.json());
-		// const githubUser: GitHubUser = await githubUserResponse.json();
+		const user: SUSTechUser = await userResponse.json();
+		console.log(user);
 
-		// Replace this with your own DB client.
-		// const existingUser = await db.table('user').where('github_id', '=', githubUser.id).get();
+		const existingUser = await db.query.oauth2Credential.findFirst({
+			where: eq(oauth2Credential.sub, user.sub),
+			with: {
+				user: true
+			}
+		});
+		console.log(existingUser);
 
-		// if (existingUser) {
-		// 	const session = await lucia.createSession(existingUser.id, {});
-		// 	const sessionCookie = lucia.createSessionCookie(session.id);
-		// 	event.cookies.set(sessionCookie.name, sessionCookie.value, {
-		// 		path: '.',
-		// 		...sessionCookie.attributes
-		// 	});
-		// } else {
-		// 	const userId = generateId(15);
+		if (existingUser) {
+			// Replace this with your own DB client.
+			const existingLuciaUser = await db.query.luciaUser.findFirst({
+				where: eq(luciaUser.id, user.sub)
+			});
+			if (!existingLuciaUser) {
+				await db.insert(luciaUser).values({ id: user.sub, userId: existingUser.id });
+			}
 
-		// 	// Replace this with your own DB client.
-		// 	await db.table('user').insert({
-		// 		id: userId,
-		// 		github_id: githubUser.id,
-		// 		username: githubUser.login
-		// 	});
-
-		// 	const session = await lucia.createSession(userId, {});
-		// 	const sessionCookie = lucia.createSessionCookie(session.id);
-		// 	event.cookies.set(sessionCookie.name, sessionCookie.value, {
-		// 		path: '.',
-		// 		...sessionCookie.attributes
-		// 	});
-		// }
+			const session = await lucia.createSession(existingUser.sub, {});
+			const sessionCookie = lucia.createSessionCookie(session.id);
+			event.cookies.set(sessionCookie.name, sessionCookie.value, {
+				path: '.',
+				...sessionCookie.attributes
+			});
+		} else {
+			// const userId = generateId(15);
+			// // Replace this with your own DB client.
+			// await db.insert(luciaUser).values({ id: userId, userId: existingUser });
+		}
 		return new Response(null, {
 			status: 302,
 			headers: {
-				Location: '/'
+				Location: '/table'
 			}
 		});
 	} catch (e) {
@@ -78,7 +84,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 	}
 }
 
-interface GitHubUser {
-	id: number;
-	login: string;
+interface SUSTechUser {
+	sub: string;
+	sustech_id: number;
 }
