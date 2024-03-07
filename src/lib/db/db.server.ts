@@ -1,4 +1,4 @@
-import { dev } from '$app/environment';
+import { building, dev } from '$app/environment';
 import { DATABASE_URL } from '$env/static/private';
 import * as schema from '$lib/drizzle/schema';
 
@@ -17,12 +17,14 @@ if (dev) {
 	});
 	db = drizzle(connection, { schema, mode: 'default' });
 } else {
-	if (!global.__db) {
-		const connection = await mysql.createConnection({
-			uri: DATABASE_URL
-		});
-		global.__db = drizzle(connection, { schema, mode: 'default' });
+	if (!building) {
+		if (!global.__db) {
+			const connection = await mysql.createConnection({
+				uri: DATABASE_URL
+			});
+			global.__db = drizzle(connection, { schema, mode: 'default' });
+		}
+		db = global.__db;
 	}
-	db = global.__db;
 }
 export { db };
