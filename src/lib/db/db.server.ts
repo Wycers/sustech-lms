@@ -1,11 +1,28 @@
+import { dev } from '$app/environment';
 import { DATABASE_URL } from '$env/static/private';
 import * as schema from '$lib/drizzle/schema';
 
-import { drizzle } from 'drizzle-orm/mysql2';
+import { drizzle, type MySql2Database } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';
 
-const connection = await mysql.createConnection({
-	uri: DATABASE_URL
-});
+let db: MySql2Database<typeof schema>;
 
-export const db = drizzle(connection, { schema, mode: 'default' });
+declare global {
+	var __db: MySql2Database<typeof schema> | undefined;
+}
+
+if (dev) {
+	const connection = await mysql.createConnection({
+		uri: DATABASE_URL
+	});
+	db = drizzle(connection, { schema, mode: 'default' });
+} else {
+	if (!global.__db) {
+		const connection = await mysql.createConnection({
+			uri: DATABASE_URL
+		});
+		global.__db = drizzle(connection, { schema, mode: 'default' });
+	}
+	db = global.__db;
+}
+export { db };
