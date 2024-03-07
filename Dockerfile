@@ -6,6 +6,7 @@ RUN npm install -g pnpm
 FROM builder-with-pnpm as builder
 
 WORKDIR /home/node
+ENV NODE_ENV production
 
 # pnpm fetch does require only lockfile
 COPY pnpm-lock.yaml ./
