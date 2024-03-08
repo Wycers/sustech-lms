@@ -1,17 +1,21 @@
 import { eq } from 'drizzle-orm';
 import { db } from './db.server';
-import { classUserRelation } from '$lib/drizzle/schema';
+import { classUserRelation, cls } from '$lib/drizzle/schema';
 
 export async function getUserClasses(userId: number) {
 	const classesOnUsers = await db.query.classUserRelation.findMany({
-		where: eq(classUserRelation.userId, userId),
-		with: {
-			class: true
-		}
+		where: eq(classUserRelation.userId, userId)
 	});
 
+	const classes = await Promise.all(
+		classesOnUsers.map(async (c) => {
+			const cx = await db.query.cls.findFirst({ where: eq(cls.id, c.classId) });
+			return cx;
+		})
+	);
+
 	return {
-		classes: classesOnUsers.map((c) => c.class)
+		classes
 	};
 }
 
