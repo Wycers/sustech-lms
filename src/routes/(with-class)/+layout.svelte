@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ClassSwitcher, DashboardMainNav, Search, UserNav } from '$lib/components/dashboard';
-	import '../app.pcss';
+	import "../../app.pcss"
 	import type { PageData } from './$types';
 
 	export let data: PageData;

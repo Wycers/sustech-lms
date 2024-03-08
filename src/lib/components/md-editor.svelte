@@ -3,6 +3,7 @@
 	import { commonmark } from '@milkdown/preset-commonmark';
 	import { gfm } from '@milkdown/preset-gfm';
 	import { math } from '@milkdown/plugin-math';
+	import { clipboard } from '@milkdown/plugin-clipboard';
 	import { nord } from '@milkdown/theme-nord';
 	import 'katex/dist/katex.min.css';
 
@@ -18,6 +19,7 @@
 			.use(commonmark)
 			.use(gfm)
 			.use(math)
+			.use(clipboard)
 			.create();
 	}
 </script>

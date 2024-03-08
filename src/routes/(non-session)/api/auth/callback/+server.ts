@@ -1,6 +1,6 @@
 import { OAuth2RequestError } from 'oslo/oauth2';
 
-import type { RequestEvent } from '@sveltejs/kit';
+import { redirect, type RequestEvent } from '@sveltejs/kit';
 import oauth2Client from '$lib/auth/sustech-cloud';
 import { lucia } from '$lib/auth.server';
 import { db } from '$lib/db/db.server';
@@ -12,7 +12,6 @@ export async function GET(event: RequestEvent): Promise<Response> {
 	const code = event.url.searchParams.get('code');
 	const state = event.url.searchParams.get('state');
 	const storedState = event.cookies.get('_oauth_state') ?? null;
-	console.log(code, state, storedState);
 	if (!code || !state || !storedState || state !== storedState) {
 		return new Response(null, {
 			status: 400
@@ -57,6 +56,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 				path: '.',
 				...sessionCookie.attributes
 			});
+			console.log('good');
 		} else {
 			// const userId = generateId(15);
 			// // Replace this with your own DB client.
@@ -65,7 +65,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 		return new Response(null, {
 			status: 302,
 			headers: {
-				Location: '/table'
+				Location: '/'
 			}
 		});
 	} catch (e) {

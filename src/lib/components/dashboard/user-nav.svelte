@@ -1,7 +1,8 @@
 <script lang="ts">
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
-	import * as Avatar from "$lib/components/ui/avatar";
-	import { Button } from "$lib/components/ui/button";
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import * as Avatar from '$lib/components/ui/avatar';
+	import { Button } from '$lib/components/ui/button';
+	export let signoutForm;
 </script>
 
 <DropdownMenu.Root>
@@ -26,20 +27,22 @@
 				Profile
 				<DropdownMenu.Shortcut>⇧⌘P</DropdownMenu.Shortcut>
 			</DropdownMenu.Item>
-			<DropdownMenu.Item>
+			<!-- <DropdownMenu.Item>
 				Billing
 				<DropdownMenu.Shortcut>⌘B</DropdownMenu.Shortcut>
-			</DropdownMenu.Item>
+			</DropdownMenu.Item> -->
 			<DropdownMenu.Item>
 				Settings
 				<DropdownMenu.Shortcut>⌘S</DropdownMenu.Shortcut>
 			</DropdownMenu.Item>
-			<DropdownMenu.Item>New Team</DropdownMenu.Item>
+			<!-- <DropdownMenu.Item>New Team</DropdownMenu.Item> -->
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
-		<DropdownMenu.Item>
-			Log out
-			<DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
-		</DropdownMenu.Item>
+		<form method="post" action="/sign-out" bind:this={signoutForm}>
+			<DropdownMenu.Item on:click={() => signoutForm.submit()}>
+				Log out
+				<DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
+			</DropdownMenu.Item>
+		</form>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>

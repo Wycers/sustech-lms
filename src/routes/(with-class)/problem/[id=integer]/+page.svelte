@@ -18,8 +18,8 @@
 		TemperatureSelector,
 		TopPSelector
 	} from '$lib/components/assignment/edit';
-	import { models, types } from '../../../lib/components/assignment/edit/models';
-	import { presets } from '../../../lib/components/assignment/edit/presets';
+	import { models, types } from '$lib/components/assignment/edit/models';
+	import { presets } from '$lib/components/assignment/edit/presets';
 	import MdEditor from '$lib/components/md-editor.svelte';
 
 	import type { PageData } from './$types';

@@ -1,12 +1,12 @@
-<script lang="ts">
+<script>
 	// import Tiptap from '$lib/Tiptap.svelte';
-	import CounterClockwiseClock from 'svelte-radix/CounterClockwiseClock.svelte';
-	import { Button } from '$lib/components/ui/button';
-	import { Label } from '$lib/components/ui/label';
-	import { Separator } from '$lib/components/ui/separator';
-	import * as Tabs from '$lib/components/ui/tabs';
-	import { Textarea } from '$lib/components/ui/textarea';
-	import * as HoverCard from '$lib/components/ui/hover-card';
+	import CounterClockwiseClock from "svelte-radix/CounterClockwiseClock.svelte";
+	import { Button } from "$lib/components/ui/button";
+	import { Label } from "$lib/components/ui/label";
+	import { Separator } from "$lib/components/ui/separator";
+	import * as Tabs from "$lib/components/ui/tabs";
+	import { Textarea } from "$lib/components/ui/textarea";
+	import * as HoverCard from "$lib/components/ui/hover-card";
 	import {
 		CodeViewer,
 		MaxLengthSelector,
@@ -16,17 +16,14 @@
 		PresetSelector,
 		PresetShare,
 		TemperatureSelector,
-		TopPSelector
-	} from '$lib/components/assignment/edit';
-	import { models, types } from '../../../lib/components/assignment/edit/models';
-	import { presets } from '../../../lib/components/assignment/edit/presets';
-	import MdEditor from '$lib/components/md-editor.svelte';
-
-	import type { PageData } from './$types';
-	export let data: PageData;
+		TopPSelector,
+	} from "$lib/components/assignment/edit";
+	import { models, types } from "$lib/components/assignment/edit/models";
+	import { presets } from "$lib/components/assignment/edit/presets";
+	import MdEditor from "$lib/components/md-editor.svelte";
 </script>
 
-<MdEditor defaultValue={data.data} />
+<MdEditor defaultValue="# Milkdown 💗 Svelte" />	
 
 <!-- <div class="md:hidden">
 	<img
