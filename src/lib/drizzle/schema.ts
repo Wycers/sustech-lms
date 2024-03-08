@@ -610,3 +610,21 @@ export const credentialRelations = relations(oauth2Credential, ({ one }) => ({
 		references: [user.id]
 	})
 }));
+
+
+export const usersRelations = relations(user, ({ many }) => ({
+	userToCls: many(classUserRelation)
+}));
+export const clsRelations = relations(cls, ({ many }) => ({
+	userToCls: many(classUserRelation)
+}));
+export const userToClsRelations = relations(classUserRelation, ({ one }) => ({
+	class: one(cls, {
+		fields: [classUserRelation.classId],
+		references: [cls.id]
+	}),
+	user: one(user, {
+		fields: [classUserRelation.classId],
+		references: [user.id]
+	})
+}));

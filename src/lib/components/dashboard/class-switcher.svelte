@@ -1,53 +1,38 @@
 <script lang="ts">
-	import CaretSort from "svelte-radix/CaretSort.svelte";
-	import Check from "svelte-radix/Check.svelte";
-	import PlusCircled from "svelte-radix/PlusCircled.svelte";
+	import CaretSort from 'svelte-radix/CaretSort.svelte';
+	import Check from 'svelte-radix/Check.svelte';
+	import PlusCircled from 'svelte-radix/PlusCircled.svelte';
 
-	import { cn } from "$lib/utils";
-	import * as Avatar from "$lib/components/ui/avatar";
-	import { Button } from "$lib/components/ui/button";
-	import * as Command from "$lib/components/ui/command";
-	import * as Dialog from "$lib/components/ui/dialog";
-	import { Input } from "$lib/components/ui/input";
-	import { Label } from "$lib/components/ui/label";
-	import * as Popover from "$lib/components/ui/popover";
-	import * as Select from "$lib/components/ui/select";
-	import { tick } from "svelte";
+	import { cn } from '$lib/utils';
+	import * as Avatar from '$lib/components/ui/avatar';
+	import { Button } from '$lib/components/ui/button';
+	import * as Command from '$lib/components/ui/command';
+	import * as Dialog from '$lib/components/ui/dialog';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
+	import * as Popover from '$lib/components/ui/popover';
+	import * as Select from '$lib/components/ui/select';
+	import { tick } from 'svelte';
+	import type { Name } from 'drizzle-orm';
+	import _ from 'lodash';
 
 	let className: string | undefined | null = undefined;
 	export { className as class };
 
-	const groups = [
-		{
-			label: "Personal Account",
-			classes: [
-				{
-					label: "Alicia Koch",
-					value: "personal",
-				},
-			],
-		},
-		{
-			label: "Classes",
-			classes: [
-				{
-					label: "Acme Inc.",
-					value: "acme-inc",
-				},
-				{
-					label: "Monsters Inc.",
-					value: "monsters",
-				},
-			],
-		},
-	];
 
-	type Class = (typeof groups)[number]["classes"][number];
+	type Class = {
+		id: number;
+		name: string;
+		semester: string;
+	}
+	export let classes: Class[];
+
+	const groupedClasses = _.groupBy(classes, (c) => c.semester);
 
 	let open = false;
 	let showClassDialog = false;
 
-	let selectedClass: Class = groups[0].classes[0];
+	let selectedClass: Class = classes?.[0]
 
 	function closeAndRefocusTrigger(triggerId: string) {
 		open = false;
@@ -65,17 +50,17 @@
 				role="combobox"
 				aria-expanded={open}
 				aria-label="Select a class"
-				class={cn("w-[200px] justify-between", className)}
+				class={cn('w-[200px] justify-between', className)}
 			>
 				<Avatar.Root class="mr-2 h-5 w-5">
 					<Avatar.Image
-						src="https://avatar.vercel.sh/${selectedClass.value}.png"
-						alt={selectedClass.label}
+						src="https://avatar.vercel.sh/${selectedClass.id}.png"
+						alt={selectedClass.name}
 						class="grayscale"
 					/>
 					<Avatar.Fallback>SC</Avatar.Fallback>
 				</Avatar.Root>
-				{selectedClass.label}
+				{selectedClass.name}
 				<CaretSort class="ml-auto h-4 w-4 shrink-0 opacity-50" />
 			</Button>
 		</Popover.Trigger>
@@ -84,30 +69,30 @@
 				<Command.Input placeholder="Search Class..." />
 				<Command.List>
 					<Command.Empty>No class found.</Command.Empty>
-					{#each groups as group}
-						<Command.Group heading={group.label}>
-							{#each group.classes as c}
+					{#each _.entries(groupedClasses) as [semester, classes]}
+						<Command.Group heading={semester}>
+							{#each classes as c}
 								<Command.Item
 									onSelect={() => {
 										selectedClass = c;
 										closeAndRefocusTrigger(ids.trigger);
 									}}
-									value={c.label}
+									value={c.name}
 									class="text-sm"
 								>
 									<Avatar.Root class="mr-2 h-5 w-5">
 										<Avatar.Image
-											src="https://avatar.vercel.sh/${c.value}.png"
-											alt={c.label}
+											src="https://avatar.vercel.sh/${c.id}.png"
+											alt={c.name}
 											class="grayscale"
 										/>
 										<Avatar.Fallback>SC</Avatar.Fallback>
 									</Avatar.Root>
-									{c.label}
+									{c.name}
 									<Check
 										class={cn(
-											"ml-auto h-4 w-4",
-											selectedClass.value !== c.value && "text-transparent"
+											'ml-auto h-4 w-4',
+											selectedClass.id !== c.id && 'text-transparent'
 										)}
 									/>
 								</Command.Item>
@@ -135,9 +120,7 @@
 	<Dialog.Content>
 		<Dialog.Header>
 			<Dialog.Title>Create class</Dialog.Title>
-			<Dialog.Description>
-				Add a new class to manage products and customers.
-			</Dialog.Description>
+			<Dialog.Description>Add a new class to manage products and customers.</Dialog.Description>
 		</Dialog.Header>
 		<div>
 			<div class="space-y-4 py-2 pb-4">
@@ -153,9 +136,7 @@
 						</Select.Trigger>
 						<Select.Content>
 							<Select.Item value="free">
-								<span class="font-medium">Free </span>-<span
-									class="text-muted-foreground"
-								>
+								<span class="font-medium">Free </span>-<span class="text-muted-foreground">
 									Trial for two weeks
 								</span>
 							</Select.Item>
