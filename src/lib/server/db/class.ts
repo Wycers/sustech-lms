@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
-import { db } from './db.server';
-import { classUserRelation, cls } from '$lib/drizzle/schema';
+import { db } from '.';
+import { classUserRelation, cls } from '$lib/server/drizzle/schema';
 
 export async function getUserClasses(userId: number) {
 	const classesOnUsers = await db.query.classUserRelation.findMany({

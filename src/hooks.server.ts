@@ -1,5 +1,8 @@
-import { lucia } from '$lib/auth.server';
-import type { Handle } from '@sveltejs/kit';
+import { lucia } from '$lib/server/auth';
+import { db } from '$lib/server/db';
+import { luciaUser } from '$lib/server/drizzle/schema';
+import { redirect, type Handle } from '@sveltejs/kit';
+import { eq } from 'drizzle-orm';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const sessionId = event.cookies.get(lucia.sessionCookieName);
@@ -10,6 +13,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	const { session, user } = await lucia.validateSession(sessionId);
+	console.log(session, user);
 	if (session && session.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		// sveltekit types deviates from the de-facto standard
@@ -25,8 +29,20 @@ export const handle: Handle = async ({ event, resolve }) => {
 			path: '.',
 			...sessionCookie.attributes
 		});
+		event.locals.user = null;
+		event.locals.session = null;
+		return resolve(event);
 	}
-	event.locals.user = user;
+
+	const lu = await db.query.luciaUser.findFirst({
+		where: eq(luciaUser.id, user!.id),
+		with: { user: true }
+	});
+	if (!lu) {
+		console.log('no user');
+		redirect(302, '/login');
+	}
+	event.locals.user = lu.user;
 	event.locals.session = session;
 	return resolve(event);
 };

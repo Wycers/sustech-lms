@@ -602,7 +602,10 @@ export const luciaSession = mysqlTable('lucia_session', {
 });
 
 export const luciaUserRelations = relations(luciaUser, ({ one }) => ({
-	user: one(user)
+	user: one(user, {
+		fields: [luciaUser.userId],
+		references: [user.id]
+	})
 }));
 export const credentialRelations = relations(oauth2Credential, ({ one }) => ({
 	user: one(user, {
@@ -610,7 +613,6 @@ export const credentialRelations = relations(oauth2Credential, ({ one }) => ({
 		references: [user.id]
 	})
 }));
-
 
 export const usersRelations = relations(user, ({ many }) => ({
 	userToCls: many(classUserRelation)

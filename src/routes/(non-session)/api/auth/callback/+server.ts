@@ -1,16 +1,16 @@
+import { type RequestEvent } from '@sveltejs/kit';
 import { OAuth2RequestError } from 'oslo/oauth2';
 
-import { redirect, type RequestEvent } from '@sveltejs/kit';
-import oauth2Client from '$lib/auth/sustech-cloud';
-import { lucia } from '$lib/auth.server';
-import { db } from '$lib/db/db.server';
+import { luciaUser, oauth2Credential } from '$lib/server/drizzle/schema';
+import oauth2Client, { credentials } from '$lib/server/auth/sustech-cloud';
+import { lucia } from '$lib/server/auth';
+import { db } from '$lib/server/db';
 import { eq } from 'drizzle-orm';
-import { luciaUser, oauth2Credential } from '$lib/drizzle/schema';
-import { generateId } from 'lucia';
 
 export async function GET(event: RequestEvent): Promise<Response> {
 	const code = event.url.searchParams.get('code');
 	const state = event.url.searchParams.get('state');
+
 	const storedState = event.cookies.get('_oauth_state') ?? null;
 	if (!code || !state || !storedState || state !== storedState) {
 		return new Response(null, {
@@ -20,7 +20,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 
 	try {
 		const tokens = await oauth2Client.validateAuthorizationCode(code, {
-			credentials: 'test1',
+			credentials,
 			authenticateWith: 'request_body'
 		});
 		console.log(tokens);

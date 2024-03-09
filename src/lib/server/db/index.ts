@@ -1,6 +1,6 @@
 import { building, dev } from '$app/environment';
 import { DATABASE_URL } from '$env/static/private';
-import * as schema from '$lib/drizzle/schema';
+import * as schema from '$lib/server/drizzle/schema';
 
 import { drizzle, type MySql2Database } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';

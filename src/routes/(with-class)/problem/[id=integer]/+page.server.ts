@@ -1,5 +1,5 @@
-import { db } from '$lib/db/db.server';
-import { problem } from '$lib/drizzle/schema';
+import { db } from '$lib/server/db';
+import { problem } from '$lib/server/drizzle/schema';
 import { error, redirect, type ServerLoad } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import _ from 'lodash';

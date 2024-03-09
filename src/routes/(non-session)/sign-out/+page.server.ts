@@ -1,4 +1,4 @@
-import { lucia } from '$lib/auth.server';
+import { lucia } from '$lib/server/auth';
 import type { Actions } from '@sveltejs/kit';
 
 export const actions: Actions = {

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ClassSwitcher, DashboardMainNav, Search, UserNav } from '$lib/components/dashboard';
-	import "../../app.pcss"
+	import '../../app.pcss';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -25,7 +25,7 @@
 			<DashboardMainNav className="mx-6" />
 			<div class="ml-auto flex items-center space-x-4">
 				<Search />
-				<UserNav />
+				<UserNav user={data.user} />
 			</div>
 		</div>
 	</div>
