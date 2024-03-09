@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 import { generateCodeVerifier, generateState } from 'oslo/oauth2';
 
 import type { RequestEvent } from '@sveltejs/kit';
-import oauth2Client from '$lib/auth/sustech-cloud';
+import oauth2Client from '$lib/server/auth/sustech-cloud';
 
 export async function GET(event: RequestEvent): Promise<Response> {
 	const state = generateState();
